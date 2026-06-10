@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KingShot — Official Fan Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+<style>
+/* ─── RESET ─── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --gold:#C8A84B; --gold2:#F0D070;
+  --deep:#0A0608; --dark1:#100C10; --dark2:#1A1220; --dark3:#241830;
+  --red:#CC2233; --crimson:#8B1A2A;
+  --text:#E8DCC8; --muted:#9A8A78; --white:#fff;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--deep);color:var(--text);overflow-x:hidden;line-height:1.6;}
+img{display:block;max-width:100%;}
+a{text-decoration:none;color:inherit;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:#0A0608;}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px;}
+
+/* ─── TYPOGRAPHY ─── */
+.display{font-family:'Cinzel',serif;letter-spacing:.04em;}
+.mono{font-family:'Orbitron',sans-serif;letter-spacing:.1em;}
+.tag{font-family:'Orbitron',sans-serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);}
+.gold-line{display:block;width:50px;height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin:10px 0 18px;}
+.gold-line.center{margin:10px auto 18px;}
+
+/* ─── BUTTONS ─── */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:3px;font-family:'Orbitron',sans-serif;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .25s;border:none;}
+.btn-gold{background:linear-gradient(135deg,#C8A84B,#F0D070,#C8A84B);color:#0A0608;font-weight:700;box-shadow:0 0 24px rgba(200,168,75,.3);}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(200,168,75,.5);}
+.btn-outline{background:transparent;color:var(--gold);border:1px solid rgba(200,168,75,.5);}
+.btn-outline:hover{background:rgba(200,168,75,.08);border-color:var(--gold);}
+.btn-red{background:linear-gradient(135deg,#8B1A2A,#CC2233);color:#fff;font-weight:700;box-shadow:0 0 20px rgba(204,34,51,.25);}
+.btn-red:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(204,34,51,.45);}
+
+/* ─── LANGUAGE PICKER ─── */
+#lang-bar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(6,4,6,.96);border-bottom:1px solid rgba(200,168,75,.15);
+  padding:6px 5%;display:flex;align-items:center;justify-content:flex-end;gap:10px;
+  backdrop-filter:blur(8px);
+}
+#lang-bar span{font-family:'Orbitron',sans-serif;font-size:.55rem;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;}
+#lang-select{
+  background:rgba(200,168,75,.1);border:1px solid rgba(200,168,75,.3);
+  color:var(--gold);font-family:'Orbitron',sans-serif;font-size:.62rem;
+  padding:4px 10px;border-radius:3px;cursor:pointer;outline:none;
+  letter-spacing:.05em;
+}
+#lang-select option{background:#1A1220;color:var(--text);}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:30px;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 5%;
+  background:linear-gradient(180deg,rgba(10,6,8,.95) 0%,transparent 100%);
+  backdrop-filter:blur(4px);
+  border-bottom:1px solid rgba(200,168,75,.08);
+  transition:background .3s,top .3s;
+}
+.nav-logo{font-family:'Cinzel',serif;font-size:1.4rem;font-weight:900;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:.1em;}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-cta{display:flex;gap:10px;align-items:center;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+.hamburger span{width:22px;height:2px;background:var(--gold);display:block;}
+
+/* ─── MOBILE MENU ─── */
+.mobile-menu{display:none;position:fixed;inset:0;z-index:150;background:rgba(10,6,8,.97);
+  flex-direction:column;align-items:center;justify-content:center;gap:28px;backdrop-filter:blur(12px);}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{font-family:'Cinzel',serif;font-size:1.3rem;color:var(--muted);transition:color .2s;}
+.mobile-menu a:hover{color:var(--gold);}
+.mobile-menu-close{position:absolute;top:24px;right:24px;font-size:2rem;color:var(--muted);cursor:pointer;}
+
+/* ─── HERO SECTION ─── */
+#hero{
+  position:relative;min-height:100vh;display:flex;align-items:center;
+  background:
+    radial-gradient(ellipse 80% 60% at 65% 40%,rgba(139,26,42,.28) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 80% at 10% 80%,rgba(20,8,30,.8) 0%,transparent 70%),
+    url('https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?w=1600&q=80') center/cover no-repeat;
+  overflow:hidden;
+  padding-top:100px;
+}
+#hero::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(10,6,8,.93) 0%,rgba(10,6,8,.6) 55%,rgba(10,6,8,.15) 100%);}
+.hero-content{position:relative;z-index:2;padding:0 5%;max-width:660px;}
+.hero-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:22px;}
+.hero-eyebrow-line{width:36px;height:1px;background:var(--gold);}
+.hero-badge{background:rgba(200,168,75,.12);border:1px solid rgba(200,168,75,.3);padding:4px 12px;border-radius:2px;
+  font-family:'Orbitron',sans-serif;font-size:.58rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;}
+.hero-title{font-family:'Cinzel',serif;font-weight:900;font-size:clamp(2.4rem,5.5vw,4.6rem);line-height:1.06;color:var(--white);margin-bottom:6px;}
+.hero-title .accent{background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.shimmer{background:linear-gradient(90deg,var(--gold) 25%,var(--gold2) 50%,var(--gold) 75%);background-size:200%;animation:shimmer 3s infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-sub{font-size:1rem;color:var(--muted);margin:18px 0 32px;max-width:440px;line-height:1.7;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
+.hero-stats{display:flex;gap:32px;margin-top:50px;padding-top:28px;border-top:1px solid rgba(200,168,75,.15);flex-wrap:wrap;}
+.hero-stat-val{font-family:'Orbitron',sans-serif;font-size:1.45rem;font-weight:700;color:var(--gold);display:block;}
+.hero-stat-label{font-size:.7rem;color:var(--muted);letter-spacing:.06em;}
+.scroll-indicator{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:2;
+  display:flex;flex-direction:column;align-items:center;gap:6px;animation:bounce 2s infinite;}
+.scroll-indicator span{font-size:.58rem;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;}
+.scroll-arrow{width:18px;height:18px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(45deg);}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+/* ─── ALERT BANNER ─── */
+#alert-banner{
+  background:linear-gradient(90deg,rgba(139,26,42,.95),rgba(20,8,14,.95),rgba(139,26,42,.95));
+  border-top:1px solid rgba(200,68,75,.4);border-bottom:1px solid rgba(200,68,75,.4);
+  padding:14px 5%;display:flex;align-items:center;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;
+  position:relative;z-index:1;
+}
+.alert-label{font-family:'Orbitron',sans-serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+  background:var(--red);color:#fff;padding:3px 10px;border-radius:2px;flex-shrink:0;}
+.alert-text{font-family:'Cinzel',serif;font-size:.9rem;color:var(--white);flex:1;}
+.alert-link{font-family:'Orbitron',sans-serif;font-size:.62rem;letter-spacing:.1em;color:var(--gold);
+  border:1px solid rgba(200,168,75,.4);padding:6px 14px;border-radius:2px;white-space:nowrap;
+  transition:background .2s;}
+.alert-link:hover{background:rgba(200,168,75,.1);}
+
+/* ─── SECTION COMMON ─── */
+section{position:relative;z-index:1;}
+.section-header{text-align:center;margin-bottom:56px;}
+.section-title{font-family:'Cinzel',serif;font-size:clamp(1.7rem,3vw,2.6rem);font-weight:700;color:var(--white);}
+.section-desc{color:var(--muted);max-width:540px;margin:12px auto 0;font-size:.9rem;line-height:1.7;}
+
+/* ─── ABOUT ─── */
+#about{padding:90px 5%;background:linear-gradient(180deg,var(--dark1) 0%,var(--dark2) 100%);}
+.about-inner{max-width:1160px;margin:0 auto;}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.about-img{position:relative;border-radius:8px;overflow:hidden;
+  border:1px solid rgba(200,168,75,.2);box-shadow:0 0 60px rgba(200,168,75,.1);}
+.about-img img{width:100%;aspect-ratio:4/3;object-fit:cover;}
+.corner{position:absolute;width:18px;height:18px;border-color:var(--gold);border-style:solid;opacity:.7;}
+.corner.tl{top:10px;left:10px;border-width:2px 0 0 2px;}
+.corner.tr{top:10px;right:10px;border-width:2px 2px 0 0;}
+.corner.bl{bottom:10px;left:10px;border-width:0 0 2px 2px;}
+.corner.br{bottom:10px;right:10px;border-width:0 2px 2px 0;}
+.about-text .gold-line{margin:10px 0 18px;}
+.about-desc{color:var(--text);font-size:.92rem;line-height:1.75;margin-bottom:14px;}
+.about-desc:last-of-type{margin-bottom:24px;}
+.about-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
+.pill{background:rgba(200,168,75,.08);border:1px solid rgba(200,168,75,.2);
+  padding:5px 14px;border-radius:20px;font-size:.75rem;color:var(--gold);}
+
+/* ─── FEATURES ─── */
+#features{padding:0 5% 90px;background:var(--dark2);}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:2px;max-width:1160px;margin:0 auto;}
+.feat-card{background:rgba(255,255,255,.025);padding:32px 24px;border:1px solid rgba(200,168,75,.07);
+  transition:all .25s;position:relative;overflow:hidden;}
+.feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .3s;}
+.feat-card:hover{background:rgba(200,168,75,.05);border-color:rgba(200,168,75,.22);transform:translateY(-3px);}
+.feat-card:hover::before{opacity:1;}
+.feat-icon{font-size:2rem;margin-bottom:14px;}
+.feat-title{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold);margin-bottom:8px;}
+.feat-text{font-size:.82rem;color:var(--muted);line-height:1.6;}
+
+/* ─── GAMEPLAY MODES ─── */
+#modes{
+  padding:90px 5%;
+  background:radial-gradient(ellipse 50% 50% at 80% 50%,rgba(139,26,42,.1) 0%,transparent 70%),var(--dark1);
+}
+.modes-inner{max-width:1160px;margin:0 auto;}
+.modes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;}
+.mode-card{background:rgba(255,255,255,.03);border:1px solid rgba(200,168,75,.1);border-radius:6px;
+  overflow:hidden;transition:transform .25s,border-color .25s;}
+.mode-card:hover{transform:translateY(-4px);border-color:rgba(200,168,75,.3);}
+.mode-card-img{aspect-ratio:16/9;overflow:hidden;}
+.mode-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+.mode-card:hover .mode-card-img img{transform:scale(1.05);}
+.mode-card-body{padding:20px;}
+.mode-card-title{font-family:'Cinzel',serif;font-size:1.05rem;color:var(--gold);margin-bottom:8px;}
+.mode-card-text{font-size:.83rem;color:var(--muted);line-height:1.6;}
+
+/* ─── BATTLE LOG ─── */
+#battles{
+  padding:90px 5%;
+  background:linear-gradient(180deg,var(--dark2) 0%,var(--dark3) 50%,var(--dark2) 100%);
+}
+.battles-inner{max-width:1160px;margin:0 auto;}
+.battles-table{width:100%;border-collapse:collapse;margin-top:8px;}
+.battles-table thead tr{border-bottom:2px solid rgba(200,168,75,.3);}
+.battles-table th{text-align:left;padding:12px 16px;font-family:'Orbitron',sans-serif;font-size:.62rem;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--gold);}
+.battles-table td{padding:14px 16px;font-size:.85rem;color:var(--text);border-bottom:1px solid rgba(255,255,255,.05);}
+.battles-table tr:hover td{background:rgba(200,168,75,.04);}
+.battle-result{padding:3px 10px;border-radius:2px;font-family:'Orbitron',sans-serif;font-size:.58rem;letter-spacing:.08em;}
+.result-win{background:rgba(40,160,80,.2);border:1px solid rgba(40,160,80,.5);color:#60D090;}
+.result-ongoing{background:rgba(200,168,75,.15);border:1px solid rgba(200,168,75,.4);color:var(--gold);}
+.result-upcoming{background:rgba(80,120,220,.15);border:1px solid rgba(80,120,220,.4);color:#90B0FF;}
+.battles-table .battle-name{font-family:'Cinzel',serif;color:var(--white);}
+
+/* ─── EVENTS ─── */
+#events{padding:90px 5%;background:var(--dark1);}
+.events-inner{max-width:1160px;margin:0 auto;}
+.events-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;}
+.event-card{background:rgba(255,255,255,.03);border:1px solid rgba(200,168,75,.1);border-radius:6px;
+  overflow:hidden;transition:transform .25s,border-color .25s;cursor:pointer;}
+.event-card:hover{transform:translateY(-4px);border-color:rgba(200,168,75,.32);}
+.event-card-img{aspect-ratio:16/9;overflow:hidden;position:relative;}
+.event-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+.event-card:hover .event-card-img img{transform:scale(1.04);}
+.event-badge{position:absolute;top:10px;left:10px;padding:3px 10px;border-radius:2px;
+  font-family:'Orbitron',sans-serif;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;}
+.badge-active{background:rgba(200,168,75,.25);border:1px solid var(--gold);color:var(--gold);}
+.badge-new{background:rgba(204,34,51,.25);border:1px solid var(--red);color:#FF8090;}
+.badge-past{background:rgba(100,100,100,.25);border:1px solid rgba(150,150,150,.4);color:var(--muted);}
+.event-card-body{padding:18px;}
+.event-date{font-family:'Orbitron',sans-serif;font-size:.62rem;letter-spacing:.1em;color:var(--gold);margin-bottom:8px;}
+.event-title{font-family:'Cinzel',serif;font-size:1rem;color:var(--white);margin-bottom:8px;line-height:1.35;}
+.event-text{font-size:.8rem;color:var(--muted);line-height:1.55;}
+.event-fb-link{display:inline-flex;align-items:center;gap:6px;margin-top:12px;
+  font-size:.72rem;color:#4A90E2;font-family:'Orbitron',sans-serif;letter-spacing:.06em;
+  border:1px solid rgba(74,144,226,.3);padding:5px 12px;border-radius:2px;
+  transition:background .2s;}
+.event-fb-link:hover{background:rgba(74,144,226,.1);}
+
+/* ─── NEW HEROES SECTION ─── */
+#new-heroes{
+  padding:90px 5%;
+  background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(30,10,50,.5) 0%,transparent 70%),var(--dark2);
+}
+.new-heroes-inner{max-width:1160px;margin:0 auto;}
+.new-heroes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.nh-card{background:rgba(255,255,255,.03);border:1px solid rgba(200,168,75,.12);border-radius:6px;
+  padding:28px 24px;text-align:center;transition:all .25s;}
+.nh-card:hover{background:rgba(200,168,75,.05);border-color:rgba(200,168,75,.3);transform:translateY(-4px);}
+.nh-icon{font-size:3rem;margin-bottom:14px;}
+.nh-rarity{font-family:'Orbitron',sans-serif;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:12px;}
+.nh-rarity.epic{background:rgba(200,168,75,.15);border:1px solid rgba(200,168,75,.4);color:var(--gold);}
+.nh-name{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--white);margin-bottom:6px;}
+.nh-role{font-size:.78rem;color:var(--muted);margin-bottom:12px;}
+.nh-desc{font-size:.82rem;color:var(--text);line-height:1.6;}
+.nh-source{font-size:.72rem;color:rgba(200,168,75,.7);margin-top:10px;font-style:italic;}
+
+/* ─── COMMUNITY / SOCIALS ─── */
+#community{
+  padding:90px 5%;
+  background:linear-gradient(180deg,var(--dark3) 0%,var(--dark1) 100%);
+}
+.community-inner{max-width:1160px;margin:0 auto;}
+.social-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;}
+.social-card{background:rgba(255,255,255,.03);border:1px solid rgba(200,168,75,.1);border-radius:6px;
+  padding:28px 22px;text-align:center;transition:all .25s;}
+.social-card:hover{transform:translateY(-4px);border-color:rgba(200,168,75,.3);background:rgba(200,168,75,.05);}
+.social-icon{font-size:2.4rem;margin-bottom:12px;}
+.social-name{font-family:'Cinzel',serif;font-size:1rem;color:var(--white);margin-bottom:6px;}
+.social-members{font-family:'Orbitron',sans-serif;font-size:.75rem;color:var(--gold);margin-bottom:10px;}
+.social-desc{font-size:.8rem;color:var(--muted);line-height:1.5;margin-bottom:16px;}
+.social-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:3px;
+  font-family:'Orbitron',sans-serif;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
+  transition:all .2s;}
+.social-btn.fb{background:rgba(24,119,242,.2);border:1px solid rgba(24,119,242,.4);color:#4A90E2;}
+.social-btn.fb:hover{background:rgba(24,119,242,.3);}
+.social-btn.discord{background:rgba(88,101,242,.2);border:1px solid rgba(88,101,242,.4);color:#8090FF;}
+.social-btn.discord:hover{background:rgba(88,101,242,.3);}
+.social-btn.store{background:rgba(200,168,75,.15);border:1px solid rgba(200,168,75,.4);color:var(--gold);}
+.social-btn.store:hover{background:rgba(200,168,75,.25);}
+.social-btn.support{background:rgba(80,180,120,.15);border:1px solid rgba(80,180,120,.4);color:#80D0A0;}
+.social-btn.support:hover{background:rgba(80,180,120,.25);}
+
+/* ─── DOWNLOAD ─── */
+#download{
+  padding:110px 5%;
+  background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(139,26,42,.18) 0%,transparent 70%),
+    linear-gradient(180deg,var(--dark3) 0%,var(--dark1) 100%);
+  text-align:center;position:relative;overflow:hidden;
+}
+#download::before{content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23C8A84B' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");}
+.dl-inner{position:relative;z-index:1;max-width:680px;margin:0 auto;}
+.dl-title{font-family:'Cinzel',serif;font-size:clamp(1.9rem,3.5vw,3rem);font-weight:900;color:var(--white);margin-bottom:14px;}
+.dl-title .accent{background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.dl-desc{color:var(--muted);font-size:.95rem;margin-bottom:40px;line-height:1.7;}
+.dl-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:40px;}
+.store-btn{display:inline-flex;align-items:center;gap:12px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(200,168,75,.25);
+  padding:13px 24px;border-radius:5px;transition:all .25s;cursor:pointer;}
+.store-btn:hover{background:rgba(200,168,75,.09);border-color:rgba(200,168,75,.5);transform:translateY(-2px);}
+.store-btn-icon{font-size:1.7rem;}
+.store-btn-sub{font-size:.6rem;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;display:block;}
+.store-btn-name{font-family:'Cinzel',serif;font-size:.95rem;color:var(--white);display:block;}
+.dl-rating{display:flex;align-items:center;justify-content:center;gap:18px;
+  padding:20px;background:rgba(255,255,255,.03);border:1px solid rgba(200,168,75,.1);border-radius:5px;}
+.rating-stars{color:var(--gold);font-size:1.1rem;letter-spacing:2px;}
+.rating-val{font-family:'Orbitron',sans-serif;font-size:1.7rem;font-weight:700;color:var(--gold);}
+.rating-label{font-size:.78rem;color:var(--muted);}
+.rating-sub{font-size:.7rem;color:var(--gold);opacity:.8;}
+
+/* ─── FOOTER ─── */
+footer{background:var(--deep);border-top:1px solid rgba(200,168,75,.1);padding:52px 5% 28px;}
+.footer-inner{max-width:1160px;margin:0 auto;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;margin-bottom:40px;}
+.footer-brand-desc{font-size:.82rem;color:var(--muted);line-height:1.7;margin-top:14px;max-width:240px;}
+.footer-social{display:flex;gap:10px;margin-top:20px;}
+.soc-link{width:34px;height:34px;border-radius:3px;background:rgba(255,255,255,.05);
+  border:1px solid rgba(200,168,75,.1);display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;transition:all .2s;}
+.soc-link:hover{background:rgba(200,168,75,.1);border-color:rgba(200,168,75,.35);}
+.footer-col-title{font-family:'Cinzel',serif;font-size:.82rem;color:var(--gold);margin-bottom:18px;letter-spacing:.05em;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.footer-links a{font-size:.8rem;color:var(--muted);transition:color .2s;}
+.footer-links a:hover{color:var(--text);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;
+  padding-top:20px;border-top:1px solid rgba(200,168,75,.07);flex-wrap:wrap;gap:10px;}
+.footer-copy{font-size:.72rem;color:var(--muted);}
+.footer-legal{display:flex;gap:16px;}
+.footer-legal a{font-size:.72rem;color:var(--muted);transition:color .2s;}
+.footer-legal a:hover{color:var(--text);}
+
+/* ─── SCROLL ANIMATIONS ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp .7s ease both;}
+.fade-up-2{animation:fadeUp .7s .13s ease both;}
+.fade-up-3{animation:fadeUp .7s .26s ease both;}
+.fade-up-4{animation:fadeUp .7s .4s ease both;}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:960px){
+  .about-grid{grid-template-columns:1fr;}
+  .new-heroes-grid{grid-template-columns:1fr 1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:720px){
+  .nav-links,.nav-cta{display:none;}
+  .hamburger{display:flex;}
+  .new-heroes-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;}
+  .footer-bottom{flex-direction:column;align-items:flex-start;}
+  .battles-table th:nth-child(3),.battles-table td:nth-child(3){display:none;}
+  nav{top:30px;}
+}
+@media(max-width:480px){
+  .dl-btns{flex-direction:column;align-items:center;}
+  .hero-stats{gap:20px;}
+  .dl-rating{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════ LANGUAGE BAR ══════ -->
+<div id="lang-bar">
+  <span>🌐 Language</span>
+  <select id="lang-select" onchange="changeLanguage(this.value)">
+    <option value="en">English</option>
+    <option value="ar">العربية</option>
+    <option value="he">עברית</option>
+    <option value="es">Español</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+    <option value="pt">Português</option>
+    <option value="ru">Русский</option>
+    <option value="zh">中文</option>
+    <option value="ja">日本語</option>
+    <option value="ko">한국어</option>
+    <option value="tr">Türkçe</option>
+    <option value="id">Indonesia</option>
+    <option value="th">ภาษาไทย</option>
+    <option value="vi">Tiếng Việt</option>
+    <option value="it">Italiano</option>
+    <option value="pl">Polski</option>
+    <option value="nl">Nederlands</option>
+  </select>
+</div>
+
+<!-- ══════ NAV ══════ -->
+<nav id="navbar">
+  <div class="nav-logo display" data-i18n="nav_logo">KING<span style="opacity:.7">SHOT</span></div>
+  <ul class="nav-links">
+    <li><a href="#about" data-i18n="nav_about">About</a></li>
+    <li><a href="#modes" data-i18n="nav_modes">Gameplay</a></li>
+    <li><a href="#battles" data-i18n="nav_battles">Battle Log</a></li>
+    <li><a href="#events" data-i18n="nav_events">Events</a></li>
+    <li><a href="#new-heroes" data-i18n="nav_heroes">New Heroes</a></li>
+    <li><a href="#community" data-i18n="nav_community">Community</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="#download" class="btn btn-gold" data-i18n="nav_play">▶ Play Free</a>
+  </div>
+  <div class="hamburger" onclick="document.getElementById('mobileMenu').classList.add('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <span class="mobile-menu-close" onclick="document.getElementById('mobileMenu').classList.remove('open')">✕</span>
+  <a href="#about" onclick="closeMobileMenu()" data-i18n="nav_about">About</a>
+  <a href="#modes" onclick="closeMobileMenu()" data-i18n="nav_modes">Gameplay</a>
+  <a href="#battles" onclick="closeMobileMenu()" data-i18n="nav_battles">Battle Log</a>
+  <a href="#events" onclick="closeMobileMenu()" data-i18n="nav_events">Events</a>
+  <a href="#new-heroes" onclick="closeMobileMenu()" data-i18n="nav_heroes">New Heroes</a>
+  <a href="#community" onclick="closeMobileMenu()" data-i18n="nav_community">Community</a>
+  <a href="#download" class="btn btn-gold" onclick="closeMobileMenu()" data-i18n="nav_play">▶ Play Free</a>
+</div>
+
+<!-- ══════ HERO SECTION ══════ -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow fade-up">
+      <div class="hero-eyebrow-line"></div>
+      <div class="hero-badge" data-i18n="hero_badge">🔥 June 2026 — Season Active</div>
+    </div>
+    <h1 class="hero-title fade-up-2">
+      <span data-i18n="hero_title1">Rebuild Your</span><br/>
+      <span class="accent" data-i18n="hero_title2">Kingdom.</span><br/>
+      <span class="shimmer" data-i18n="hero_title3">Conquer All.</span>
+    </h1>
+    <p class="hero-sub fade-up-3" data-i18n="hero_sub">
+      A grand strategy & simulation mobile game by Century Games. Build your town, lead armies, rescue refugees, and fight for dominion over a war-torn continent.
+    </p>
+    <div class="hero-btns fade-up-4">
+      <a href="#download" class="btn btn-gold" data-i18n="hero_btn1">⚔️ Download Now</a>
+      <a href="#about" class="btn btn-outline" data-i18n="hero_btn2">Learn More</a>
+    </div>
+    <div class="hero-stats fade-up-4">
+      <div>
+        <span class="hero-stat-val">2.2M+</span>
+        <span class="hero-stat-label" data-i18n="stat1">Facebook Followers</span>
+      </div>
+      <div>
+        <span class="hero-stat-val">587K+</span>
+        <span class="hero-stat-label" data-i18n="stat2">Discord Members</span>
+      </div>
+      <div>
+        <span class="hero-stat-val">4.8★</span>
+        <span class="hero-stat-label" data-i18n="stat3">App Store Rating</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span data-i18n="scroll">Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ══════ ALERT BANNER ══════ -->
+<div id="alert-banner">
+  <span class="alert-label" data-i18n="alert_label">🔴 Live Event</span>
+  <span class="alert-text" data-i18n="alert_text">⚡ Kingdom of Power — Summer Edition is now active! Compete for the supreme glory of your kingdom and exclusive skins.</span>
+  <a href="https://www.facebook.com/share/14dZiDuJ8n/?mibextid=wwXIfr" target="_blank" class="alert-link" data-i18n="alert_btn">View on Facebook →</a>
+</div>
+
+<!-- ══════ ABOUT ══════ -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-grid">
+      <div class="about-img">
+        <img src="https://images.unsplash.com/photo-1548686304-89d188a80029?w=800&q=80" alt="KingShot Kingdom"/>
+        <div class="corner tl"></div><div class="corner tr"></div>
+        <div class="corner bl"></div><div class="corner br"></div>
+      </div>
+      <div class="about-text">
+        <span class="tag" data-i18n="about_tag">About the Game</span>
+        <span class="gold-line"></span>
+        <h2 class="section-title" style="text-align:left;" data-i18n="about_title">What Is KingShot?</h2>
+        <p class="about-desc" data-i18n="about_p1">
+          KingShot is an online mobile strategy and simulation game developed by Century Games. Players take on the role of Governors who must battle rebels, rescue refugees, and rekindle civilization in a dark era of collapse.
+        </p>
+        <p class="about-desc" data-i18n="about_p2">
+          Starting from a small Town Center, you develop your city, provide shelter and food to civilians, train soldiers, recruit heroes, and gather resources to grow your power. As your kingdom expands, you compete against governors worldwide to claim the ultimate throne.
+        </p>
+        <p class="about-desc" data-i18n="about_p3">
+          The continent is flooded with untapped resources following a sudden state collapse. Refugees, rebels, and power-hungry governors all eye these precious materials — only the strongest and most strategic Governor will prevail.
+        </p>
+        <div class="about-pills">
+          <span class="pill" data-i18n="pill1">📱 Mobile</span>
+          <span class="pill" data-i18n="pill2">🌍 iOS & Android</span>
+          <span class="pill" data-i18n="pill3">⚔️ Strategy</span>
+          <span class="pill" data-i18n="pill4">🏙️ City Builder</span>
+          <span class="pill" data-i18n="pill5">🆓 Free to Play</span>
+          <span class="pill" data-i18n="pill6">👥 Multiplayer</span>
+        </div>
+        <a href="#download" class="btn btn-gold" data-i18n="about_btn">Start Playing →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ FEATURES ══════ -->
+<section id="features">
+  <div style="max-width:1160px;margin:0 auto;padding-top:0;">
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon">🏙️</div>
+        <div class="feat-title" data-i18n="feat1_title">City Building</div>
+        <div class="feat-text" data-i18n="feat1_text">Construct and upgrade your Town Center from a humble village to a mighty empire. Manage buildings, housing, farms, and defenses strategically.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">⚔️</div>
+        <div class="feat-title" data-i18n="feat2_title">Combat & Armies</div>
+        <div class="feat-text" data-i18n="feat2_text">Train infantry, cavalry, and archers. Lead them in battles against rebels, monsters, and rival governors across the open world map.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🦸</div>
+        <div class="feat-title" data-i18n="feat3_title">Hero Recruitment</div>
+        <div class="feat-text" data-i18n="feat3_text">Recruit powerful heroes to lead your armies and chase away beasts. Heroes gain levels, skills, and gear to become unstoppable legends.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🤝</div>
+        <div class="feat-title" data-i18n="feat4_title">Alliance System</div>
+        <div class="feat-text" data-i18n="feat4_text">Join or create alliances, coordinate strategies, share resources, and dominate global leaderboards through coordinated warfare.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🗺️</div>
+        <div class="feat-title" data-i18n="feat5_title">Open World Map</div>
+        <div class="feat-text" data-i18n="feat5_text">Explore a vast world filled with resource nodes, rebel camps, sanctuaries, fortresses, and rival kingdoms to expand into.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ GAMEPLAY MODES ══════ -->
+<section id="modes">
+  <div class="modes-inner">
+    <div class="section-header">
+      <span class="tag" data-i18n="modes_tag">Core Gameplay</span>
+      <span class="gold-line center"></span>
+      <h2 class="section-title" data-i18n="modes_title">How You Play</h2>
+      <p class="section-desc" data-i18n="modes_desc">Multiple paths to power — choose your strategy and dominate the realm.</p>
+    </div>
+    <div class="modes-grid">
+      <div class="mode-card">
+        <div class="mode-card-img">
+          <img src="https://images.unsplash.com/photo-1464082354059-27db6ce50048?w=600&q=80" alt="City Development"/>
+        </div>
+        <div class="mode-card-body">
+          <div class="mode-card-title" data-i18n="mode1_title">⚒️ City Development</div>
+          <div class="mode-card-text" data-i18n="mode1_text">Develop your Town Center, rescue civilians, provide food and shelter, and plan city constructions. A strong base is the foundation of any empire.</div>
+        </div>
+      </div>
+      <div class="mode-card">
+        <div class="mode-card-img">
+          <img src="https://images.unsplash.com/photo-1529539795054-3c162aab037a?w=600&q=80" alt="PvP Battles"/>
+        </div>
+        <div class="mode-card-body">
+          <div class="mode-card-title" data-i18n="mode2_title">⚔️ PvP Warfare</div>
+          <div class="mode-card-text" data-i18n="mode2_text">Compete against governors worldwide. March your armies to attack, pillage resources, and rise through the power rankings to become the strongest Governor.</div>
+        </div>
+      </div>
+      <div class="mode-card">
+        <div class="mode-card-img">
+          <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&q=80" alt="Alliance War"/>
+        </div>
+        <div class="mode-card-body">
+          <div class="mode-card-title" data-i18n="mode3_title">🛡️ Alliance Warfare</div>
+          <div class="mode-card-text" data-i18n="mode3_text">Fight alongside your alliance in Sanctuary Battles, Kingdom of Power events, and cross-server wars. Claim fortresses and expand your alliance territory.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ BATTLE LOG ══════ -->
+<section id="battles">
+  <div class="battles-inner">
+    <div class="section-header">
+      <span class="tag" data-i18n="battles_tag">Records</span>
+      <span class="gold-line center"></span>
+      <h2 class="section-title" data-i18n="battles_title">Battle Log & Major Events</h2>
+      <p class="section-desc" data-i18n="battles_desc">Key milestones and battles from Kingdom 1 history and official game events.</p>
+    </div>
+    <table class="battles-table">
+      <thead>
+        <tr>
+          <th data-i18n="th_date">Date</th>
+          <th data-i18n="th_event">Event / Battle</th>
+          <th data-i18n="th_detail">Details</th>
+          <th data-i18n="th_status">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Jun 2026</td>
+          <td class="battle-name" data-i18n="b1_name">Kingdom of Power — Summer Edition</td>
+          <td data-i18n="b1_detail">Governors battle for supreme kingdom glory. Exclusive skins &amp; rewards for top performers.</td>
+          <td><span class="battle-result result-ongoing" data-i18n="ongoing">● ACTIVE</span></td>
+        </tr>
+        <tr>
+          <td>Jun 8, 2026</td>
+          <td class="battle-name" data-i18n="b2_name">June Calendar Event</td>
+          <td data-i18n="b2_detail">Summer season begins — new in-game calendar released with seasonal rewards &amp; community challenges.</td>
+          <td><span class="battle-result result-ongoing" data-i18n="active">● ACTIVE</span></td>
+        </tr>
+        <tr>
+          <td>May 14, 2026</td>
+          <td class="battle-name" data-i18n="b3_name">Find The Star Challenge</td>
+          <td data-i18n="b3_detail">Community puzzle challenge on Facebook. 50 lucky Governors won special rewards by submitting correct answers.</td>
+          <td><span class="battle-result result-win" data-i18n="ended">✓ ENDED</span></td>
+        </tr>
+        <tr>
+          <td>Apr 1, 2026</td>
+          <td class="battle-name" data-i18n="b4_name">Easter Puzzle Time</td>
+          <td data-i18n="b4_detail">Seasonal puzzle event with limited rewards. Community event on official Facebook page.</td>
+          <td><span class="battle-result result-win" data-i18n="ended2">✓ ENDED</span></td>
+        </tr>
+        <tr>
+          <td>Mar 2, 2026</td>
+          <td class="battle-name" data-i18n="b5_name">March Calendar Release</td>
+          <td data-i18n="b5_detail">Monthly calendar and new season content dropped for Kingdom Progression Optimization.</td>
+          <td><span class="battle-result result-win" data-i18n="ended3">✓ ENDED</span></td>
+        </tr>
+        <tr>
+          <td>Dec 2025</td>
+          <td class="battle-name" data-i18n="b6_name">December Major Update</td>
+          <td data-i18n="b6_detail">New features: Pet System, Alliance Brawl, Merchant Empire, Tri-Alliance Clash, Kingdom Transfer introduced.</td>
+          <td><span class="battle-result result-win" data-i18n="deployed">✓ DEPLOYED</span></td>
+        </tr>
+        <tr>
+          <td>May 2025</td>
+          <td class="battle-name" data-i18n="b7_name">Discord 100K Milestone</td>
+          <td data-i18n="b7_detail">Official Discord hit 100,000 members. Gift code KSDC100K distributed to all Governors.</td>
+          <td><span class="battle-result result-win" data-i18n="completed">✓ COMPLETED</span></td>
+        </tr>
+        <tr>
+          <td>Ongoing</td>
+          <td class="battle-name" data-i18n="b8_name">Sanctuary Battle — Season</td>
+          <td data-i18n="b8_detail">Alliances fight for Sanctuaries &amp; Fortresses. Points determine season rewards. New Sanctuary Teleport feature active.</td>
+          <td><span class="battle-result result-ongoing" data-i18n="season">● SEASON</span></td>
+        </tr>
+        <tr>
+          <td>Upcoming</td>
+          <td class="battle-name" data-i18n="b9_name">Strongest Governor Championship</td>
+          <td data-i18n="b9_detail">Cross-kingdom Honor Ranking battle. Fight governors across kingdoms for glory and bountiful rewards.</td>
+          <td><span class="battle-result result-upcoming" data-i18n="upcoming">◈ UPCOMING</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════ EVENTS ══════ -->
+<section id="events">
+  <div class="events-inner">
+    <div class="section-header">
+      <span class="tag" data-i18n="events_tag">Official Events</span>
+      <span class="gold-line center"></span>
+      <h2 class="section-title" data-i18n="events_title">Current & Recent Events</h2>
+      <p class="section-desc" data-i18n="events_desc">Stay updated on all official KingShot events. Follow Facebook and Discord for real-time announcements.</p>
+    </div>
+    <div class="events-grid">
+      <!-- Event 1 - ACTIVE -->
+      <div class="event-card">
+        <div class="event-card-img">
+          <img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=600&q=80" alt="Kingdom of Power"/>
+          <span class="event-badge badge-active" data-i18n="badge_live">🔴 LIVE NOW</span>
+        </div>
+        <div class="event-card-body">
+          <div class="event-date">June 2026</div>
+          <div class="event-title" data-i18n="ev1_title">Kingdom of Power — Summer Edition</div>
+          <div class="event-text" data-i18n="ev1_text">Sound the battle horn and join the ultimate clash of kings! Win supreme glory for your kingdom and unlock exclusive skins available only during this event. Check your server calendar for the exact event period.</div>
+          <a href="https://www.facebook.com/share/14dZiDuJ8n/?mibextid=wwXIfr" target="_blank" class="event-fb-link">
+            📘 <span data-i18n="ev_fb">Follow on Facebook</span>
+          </a>
+        </div>
+      </div>
+      <!-- Event 2 - ACTIVE -->
+      <div class="event-card">
+        <div class="event-card-img">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80" alt="June Calendar"/>
+          <span class="event-badge badge-active" data-i18n="badge_new">✨ NEW</span>
+        </div>
+        <div class="event-card-body">
+          <div class="event-date">June 8, 2026</div>
+          <div class="event-title" data-i18n="ev2_title">June 2026 Calendar — Summer Vibes</div>
+          <div class="event-text" data-i18n="ev2_text">Summer is officially here! Download the June in-game calendar, refresh your screen, and kick off a month of sunny adventures. Community question: which Hero would you take to the beach?</div>
+          <a href="https://www.centurygames.com/kingshot-june-calendar/" target="_blank" class="event-fb-link">
+            🌐 <span data-i18n="ev_site">Official Page</span>
+          </a>
+        </div>
+      </div>
+      <!-- Event 3 - ACTIVE -->
+      <div class="event-card">
+        <div class="event-card-img">
+          <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&q=80" alt="Strongest Governor"/>
+          <span class="event-badge badge-active" data-i18n="badge_active">● ACTIVE</span>
+        </div>
+        <div class="event-card-body">
+          <div class="event-date">June 2026</div>
+          <div class="event-title" data-i18n="ev3_title">Strongest Governor — Honor Rankings</div>
+          <div class="event-text" data-i18n="ev3_text">Fight against governors across kingdoms for glory on the Honor Ranking and bountiful rewards. Rise to the top of the rankings and prove you are the mightiest Governor in the realm.</div>
+          <a href="https://www.facebook.com/share/14dZiDuJ8n/?mibextid=wwXIfr" target="_blank" class="event-fb-link">
+            📘 <span data-i18n="ev_fb2">Follow Updates</span>
+          </a>
+        </div>
+      </div>
+      <!-- Event 4 - ACTIVE -->
+      <div class="event-card">
+        <div class="event-card-img">
+          <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&q=80" alt="Sanctuary Battle"/>
+          <span class="event-badge badge-active" data-i18n="badge_season">⚔️ SEASON</span>
+        </div>
+        <div class="event-card-body">
+          <div class="event-date">Ongoing Season</div>
+          <div class="event-title" data-i18n="ev4_title">Sanctuary Battle Season</div>
+          <div class="event-text" data-i18n="ev4_text">Alliances compete to occupy Sanctuaries and Fortresses. New Sanctuary Teleport feature: after research, teleport freely to your registered Sanctuary ruins. Points earned = season rewards.</div>
+          <a href="https://centurygames.helpshift.com/hc/en/140-kingshot/section/1380-sanctuary-battle/" target="_blank" class="event-fb-link">
+            📖 <span data-i18n="ev_guide">Full Guide</span>
+          </a>
+        </div>
+      </div>
+      <!-- Event 5 - PAST -->
+      <div class="event-card">
+        <div class="event-card-img">
+          <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&q=80" alt="Find the Star"/>
+          <span class="event-badge badge-past" data-i18n="badge_past">✓ ENDED</span>
+        </div>
+        <div class="event-card-body">
+          <div class="event-date">May 14, 2026</div>
+          <div class="event-title" data-i18n="ev5_title">Find The Star — Community Challenge</div>
+          <div class="event-text" data-i18n="ev5_text">Community puzzle challenge on Facebook. Players submitted answers with their Game ID for a chance to win. 50 lucky Governors were randomly selected to receive special rewards.</div>
+          <a href="https://www.centurygames.com/kingshot-find-the-star/" target="_blank" class="event-fb-link">
+            🌐 <span data-i18n="ev_recap">View Recap</span>
+          </a>
+        </div>
+      </div>
+      <!-- Event 6 - PAST -->
+      <div class="event-card">
+        <div class="event-card-img">
+          <img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=600&q=80" alt="Easter Event"/>
+          <span class="event-badge badge-past" data-i18n="badge_past2">✓ ENDED</span>
+        </div>
+        <div class="event-card-body">
+          <div class="event-date">April 1, 2026</div>
+          <div class="event-title" data-i18n="ev6_title">Easter Puzzle Time</div>
+          <div class="event-text" data-i18n="ev6_text">Seasonal Easter event featuring fun puzzle challenges for the community. Limited-time rewards and exclusive items were available to participating Governors throughout the event period.</div>
+          <a href="https://www.centurygames.com/kingshot-easter-puzzle-time/" target="_blank" class="event-fb-link">
+            🌐 <span data-i18n="ev_recap2">View Event</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ NEW HEROES ══════ -->
+<section id="new-heroes">
+  <div class="new-heroes-inner">
+    <div class="section-header">
+      <span class="tag" data-i18n="nh_tag">Latest Update</span>
+      <span class="gold-line center"></span>
+      <h2 class="section-title" data-i18n="nh_title">New Heroes — Kingdom 1</h2>
+      <p class="section-desc" data-i18n="nh_desc">Three Epic Heroes added in the latest update — available through events and recruitment in the first kingdoms.</p>
+    </div>
+    <div class="new-heroes-grid">
+      <div class="nh-card">
+        <div class="nh-icon">🗡️</div>
+        <div class="nh-rarity epic" data-i18n="nh_rarity">Epic Hero</div>
+        <div class="nh-name">Fahd</div>
+        <div class="nh-role" data-i18n="nh1_role">Combat Hero</div>
+        <div class="nh-desc" data-i18n="nh1_desc">A fierce and battle-hardened warrior added in the latest update. Fahd specializes in leading ground troops into close-range combat with devastating efficiency.</div>
+        <div class="nh-source" data-i18n="nh_source">Available via Events & Recruitment</div>
+      </div>
+      <div class="nh-card">
+        <div class="nh-icon">🌸</div>
+        <div class="nh-rarity epic" data-i18n="nh_rarity2">Epic Hero</div>
+        <div class="nh-name">Yeonwoo</div>
+        <div class="nh-role" data-i18n="nh2_role">Support Hero</div>
+        <div class="nh-desc" data-i18n="nh2_desc">Yeonwoo brings tactical support to the battlefield. Her unique skills enhance alliance operations and provide critical buffs during large-scale engagements.</div>
+        <div class="nh-source" data-i18n="nh_source2">Available via Events & Recruitment</div>
+      </div>
+      <div class="nh-card">
+        <div class="nh-icon">⚡</div>
+        <div class="nh-rarity epic" data-i18n="nh_rarity3">Epic Hero</div>
+        <div class="nh-name">Mikoto</div>
+        <div class="nh-role" data-i18n="nh3_role">Ranged Hero</div>
+        <div class="nh-desc" data-i18n="nh3_desc">Mikoto commands ranged units with deadly precision. This hero excels in long-distance engagements and is highly effective in both PvE and PvP scenarios.</div>
+        <div class="nh-source" data-i18n="nh_source3">Available via Events & Recruitment</div>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:28px;font-size:.8rem;color:var(--muted);" data-i18n="nh_note">
+      * Hero availability may vary by server and kingdom progression stage.
+    </p>
+  </div>
+</section>
+
+<!-- ══════ COMMUNITY ══════ -->
+<section id="community">
+  <div class="community-inner">
+    <div class="section-header">
+      <span class="tag" data-i18n="comm_tag">Official Channels</span>
+      <span class="gold-line center"></span>
+      <h2 class="section-title" data-i18n="comm_title">Join the Community</h2>
+      <p class="section-desc" data-i18n="comm_desc">Connect with over 2.2 million Governors worldwide through KingShot's official channels.</p>
+    </div>
+    <div class="social-cards">
+      <!-- Facebook -->
+      <div class="social-card">
+        <div class="social-icon">📘</div>
+        <div class="social-name">Facebook</div>
+        <div class="social-members" data-i18n="fb_members">2.2M+ Followers</div>
+        <div class="social-desc" data-i18n="fb_desc">Official page for news, events, community challenges, and announcements. The main hub for all KingShot updates.</div>
+        <a href="https://www.facebook.com/p/Kingshot-61560003321785/" target="_blank" class="social-btn fb" data-i18n="fb_btn">Visit Page →</a>
+      </div>
+      <!-- Discord -->
+      <div class="social-card">
+        <div class="social-icon">💬</div>
+        <div class="social-name">Discord</div>
+        <div class="social-members" data-i18n="dc_members">587K+ Members</div>
+        <div class="social-desc" data-i18n="dc_desc">Official Discord server for live chat, strategy discussions, gift codes, and direct developer interaction.</div>
+        <a href="https://discord.gg/kingshot" target="_blank" class="social-btn discord" data-i18n="dc_btn">Join Server →</a>
+      </div>
+      <!-- Official Store -->
+      <div class="social-card">
+        <div class="social-icon">🏪</div>
+        <div class="social-name" data-i18n="store_name">Official Store</div>
+        <div class="social-members" data-i18n="store_sub">Century Games Store</div>
+        <div class="social-desc" data-i18n="store_desc">Top up gems and in-game currency directly through the official Century Games store for the best rates and security.</div>
+        <a href="https://store.centurygames.com/kingshot" target="_blank" class="social-btn store" data-i18n="store_btn">Visit Store →</a>
+      </div>
+      <!-- Support -->
+      <div class="social-card">
+        <div class="social-icon">🛠️</div>
+        <div class="social-name" data-i18n="sup_name">Help Center</div>
+        <div class="social-members" data-i18n="sup_sub">Century Games Support</div>
+        <div class="social-desc" data-i18n="sup_desc">Official help center for account issues, game questions, bug reports, and technical support.</div>
+        <a href="https://centurygames.helpshift.com/hc/en/140-kingshot/" target="_blank" class="social-btn support" data-i18n="sup_btn">Get Help →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ DOWNLOAD ══════ -->
+<section id="download">
+  <div class="dl-inner">
+    <span class="tag" style="display:block;margin-bottom:18px;" data-i18n="dl_tag">Free to Play</span>
+    <h2 class="dl-title">
+      <span data-i18n="dl_title1">Your Kingdom</span><br/>
+      <span class="accent" data-i18n="dl_title2">Awaits You</span>
+    </h2>
+    <p class="dl-desc" data-i18n="dl_desc">
+      Download KingShot for free on iOS and Android. Build your empire, join alliances, battle governors worldwide, and claim the throne.
+    </p>
+    <div class="dl-btns">
+      <a href="https://apps.apple.com/us/app/kingshot/id6739554056" target="_blank" class="store-btn">
+        <div class="store-btn-icon">🍎</div>
+        <div>
+          <span class="store-btn-sub" data-i18n="ios_sub">Download on the</span>
+          <span class="store-btn-name">App Store</span>
+        </div>
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=com.run.tower.defense&hl=en_US" target="_blank" class="store-btn">
+        <div class="store-btn-icon">▶️</div>
+        <div>
+          <span class="store-btn-sub" data-i18n="gp_sub">Get it on</span>
+          <span class="store-btn-name">Google Play</span>
+        </div>
+      </a>
+    </div>
+    <div class="dl-rating">
+      <div><div class="rating-stars">★★★★★</div><div class="rating-label" style="font-size:.65rem;color:var(--muted)">App Store</div></div>
+      <div class="rating-val">4.8</div>
+      <div>
+        <div class="rating-label" data-i18n="rating_label">Highly Rated by Players</div>
+        <div class="rating-sub" data-i18n="rating_sub">Editor's Choice — Google Play</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ FOOTER ══════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="nav-logo display" style="font-size:1.5rem;">KING<span style="opacity:.7">SHOT</span></div>
+        <p class="footer-brand-desc" data-i18n="footer_desc">A grand strategy & simulation mobile game by Century Games. Build, battle, and dominate a living world with millions of players.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/p/Kingshot-61560003321785/" target="_blank" class="soc-link" title="Facebook">f</a>
+          <a href="https://discord.gg/kingshot" target="_blank" class="soc-link" title="Discord">💬</a>
+          <a href="https://store.centurygames.com/kingshot" target="_blank" class="soc-link" title="Store">🏪</a>
+          <a href="https://centurygames.helpshift.com/hc/en/140-kingshot/" target="_blank" class="soc-link" title="Support">🛠️</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title" data-i18n="f_game">Game</div>
+        <ul class="footer-links">
+          <li><a href="#about" data-i18n="f_about">About KingShot</a></li>
+          <li><a href="#modes" data-i18n="f_gameplay">Gameplay</a></li>
+          <li><a href="#battles" data-i18n="f_battles">Battle Log</a></li>
+          <li><a href="#events" data-i18n="f_events">Events</a></li>
+          <li><a href="#new-heroes" data-i18n="f_heroes">New Heroes</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title" data-i18n="f_community">Community</div>
+        <ul class="footer-links">
+          <li><a href="https://www.facebook.com/p/Kingshot-61560003321785/" target="_blank">Facebook</a></li>
+          <li><a href="https://discord.gg/kingshot" target="_blank">Discord</a></li>
+          <li><a href="https://store.centurygames.com/kingshot" target="_blank" data-i18n="f_store">Official Store</a></li>
+          <li><a href="https://centurygames.helpshift.com/hc/en/140-kingshot/" target="_blank" data-i18n="f_support">Support</a></li>
+          <li><a href="https://www.centurygames.com/games/kingshot/" target="_blank" data-i18n="f_official">Official Site</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title" data-i18n="f_download">Download</div>
+        <ul class="footer-links">
+          <li><a href="https://apps.apple.com/us/app/kingshot/id6739554056" target="_blank">iOS — App Store</a></li>
+          <li><a href="https://play.google.com/store/apps/details?id=com.run.tower.defense" target="_blank">Android — Google Play</a></li>
+          <li><a href="https://www.centurygames.com/privacy-policy/" target="_blank" data-i18n="f_privacy">Privacy Policy</a></li>
+          <li><a href="https://www.centurygames.com/terms-of-service/" target="_blank" data-i18n="f_terms">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy" data-i18n="footer_copy">© 2026 KingShot by Century Games. All rights reserved. This is an unofficial fan hub page.</div>
+      <div class="footer-legal">
+        <a href="https://www.centurygames.com/privacy-policy/" target="_blank" data-i18n="f_priv2">Privacy</a>
+        <a href="https://www.centurygames.com/terms-of-service/" target="_blank" data-i18n="f_terms2">Terms</a>
+        <a href="https://centurygames.helpshift.com/hc/en/140-kingshot/" target="_blank" data-i18n="f_help">Help</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════ SCRIPTS ══════════════════ -->
+<script>
+// ── Nav scroll effect ──
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.style.background = window.scrollY > 50
+    ? 'rgba(10,6,8,0.97)'
+    : 'linear-gradient(180deg,rgba(10,6,8,0.95) 0%,transparent 100%)';
+});
+
+// ── Mobile menu close ──
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+// ── Scroll reveal ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.feat-card,.mode-card,.event-card,.nh-card,.social-card,.mode-card').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity .55s ease, transform .55s ease';
+  observer.observe(el);
+});
+
+// ══════════════════════════════════════════════
+//  MULTILINGUAL TRANSLATIONS
+// ══════════════════════════════════════════════
+const translations = {
+  en: {
+    nav_about:"About", nav_modes:"Gameplay", nav_battles:"Battle Log",
+    nav_events:"Events", nav_heroes:"New Heroes", nav_community:"Community", nav_play:"▶ Play Free",
+    hero_badge:"🔥 June 2026 — Season Active",
+    hero_title1:"Rebuild Your", hero_title2:"Kingdom.", hero_title3:"Conquer All.",
+    hero_sub:"A grand strategy & simulation mobile game by Century Games. Build your town, lead armies, rescue refugees, and fight for dominion over a war-torn continent.",
+    hero_btn1:"⚔️ Download Now", hero_btn2:"Learn More",
+    stat1:"Facebook Followers", stat2:"Discord Members", stat3:"App Store Rating", scroll:"Scroll",
+    alert_label:"🔴 Live Event",
+    alert_text:"⚡ Kingdom of Power — Summer Edition is now active! Compete for the supreme glory of your kingdom and exclusive skins.",
+    alert_btn:"View on Facebook →",
+    about_tag:"About the Game", about_title:"What Is KingShot?",
+    about_p1:"KingShot is an online mobile strategy and simulation game developed by Century Games. Players take on the role of Governors who must battle rebels, rescue refugees, and rekindle civilization in a dark era of collapse.",
+    about_p2:"Starting from a small Town Center, you develop your city, provide shelter and food to civilians, train soldiers, recruit heroes, and gather resources to grow your power. As your kingdom expands, you compete against governors worldwide to claim the ultimate throne.",
+    about_p3:"The continent is flooded with untapped resources following a sudden state collapse. Refugees, rebels, and power-hungry governors all eye these precious materials — only the strongest and most strategic Governor will prevail.",
+    pill1:"📱 Mobile", pill2:"🌍 iOS & Android", pill3:"⚔️ Strategy", pill4:"🏙️ City Builder", pill5:"🆓 Free to Play", pill6:"👥 Multiplayer",
+    about_btn:"Start Playing →",
+    feat1_title:"City Building", feat1_text:"Construct and upgrade your Town Center from a humble village to a mighty empire. Manage buildings, housing, farms, and defenses strategically.",
+    feat2_title:"Combat & Armies", feat2_text:"Train infantry, cavalry, and archers. Lead them in battles against rebels, monsters, and rival governors across the open world map.",
+    feat3_title:"Hero Recruitment", feat3_text:"Recruit powerful heroes to lead your armies and chase away beasts. Heroes gain levels, skills, and gear to become unstoppable legends.",
+    feat4_title:"Alliance System", feat4_text:"Join or create alliances, coordinate strategies, share resources, and dominate global leaderboards through coordinated warfare.",
+    feat5_title:"Open World Map", feat5_text:"Explore a vast world filled with resource nodes, rebel camps, sanctuaries, fortresses, and rival kingdoms to expand into.",
+    modes_tag:"Core Gameplay", modes_title:"How You Play", modes_desc:"Multiple paths to power — choose your strategy and dominate the realm.",
+    mode1_title:"⚒️ City Development", mode1_text:"Develop your Town Center, rescue civilians, provide food and shelter, and plan city constructions. A strong base is the foundation of any empire.",
+    mode2_title:"⚔️ PvP Warfare", mode2_text:"Compete against governors worldwide. March your armies to attack, pillage resources, and rise through the power rankings to become the strongest Governor.",
+    mode3_title:"🛡️ Alliance Warfare", mode3_text:"Fight alongside your alliance in Sanctuary Battles, Kingdom of Power events, and cross-server wars. Claim fortresses and expand your alliance territory.",
+    battles_tag:"Records", battles_title:"Battle Log & Major Events", battles_desc:"Key milestones and battles from Kingdom 1 history and official game events.",
+    th_date:"Date", th_event:"Event / Battle", th_detail:"Details", th_status:"Status",
+    b1_name:"Kingdom of Power — Summer Edition", b1_detail:"Governors battle for supreme kingdom glory. Exclusive skins & rewards for top performers.",
+    b2_name:"June Calendar Event", b2_detail:"Summer season begins — new in-game calendar released with seasonal rewards & community challenges.",
+    b3_name:"Find The Star Challenge", b3_detail:"Community puzzle challenge on Facebook. 50 lucky Governors won special rewards.",
+    b4_name:"Easter Puzzle Time", b4_detail:"Seasonal Easter event with limited rewards. Community event on official Facebook page.",
+    b5_name:"March Calendar Release", b5_detail:"Monthly calendar and new season content dropped for Kingdom Progression Optimization.",
+    b6_name:"December Major Update", b6_detail:"New features: Pet System, Alliance Brawl, Merchant Empire, Tri-Alliance Clash, Kingdom Transfer.",
+    b7_name:"Discord 100K Milestone", b7_detail:"Official Discord hit 100,000 members. Gift code KSDC100K distributed to all Governors.",
+    b8_name:"Sanctuary Battle — Season", b8_detail:"Alliances fight for Sanctuaries & Fortresses. New Sanctuary Teleport feature active.",
+    b9_name:"Strongest Governor Championship", b9_detail:"Cross-kingdom Honor Ranking battle. Fight governors across kingdoms for glory and bountiful rewards.",
+    ongoing:"● ACTIVE", active:"● ACTIVE", ended:"✓ ENDED", ended2:"✓ ENDED", ended3:"✓ ENDED", deployed:"✓ DEPLOYED", completed:"✓ COMPLETED", season:"● SEASON", upcoming:"◈ UPCOMING",
+    events_tag:"Official Events", events_title:"Current & Recent Events", events_desc:"Stay updated on all official KingShot events. Follow Facebook and Discord for real-time announcements.",
+    badge_live:"🔴 LIVE NOW", badge_new:"✨ NEW", badge_active:"● ACTIVE", badge_season:"⚔️ SEASON", badge_past:"✓ ENDED", badge_past2:"✓ ENDED",
+    ev1_title:"Kingdom of Power — Summer Edition", ev1_text:"Sound the battle horn and join the ultimate clash of kings! Win supreme glory for your kingdom and unlock exclusive skins available only during this event. Check your server calendar for the exact event period.",
+    ev2_title:"June 2026 Calendar — Summer Vibes", ev2_text:"Summer is officially here! Download the June in-game calendar, refresh your screen, and kick off a month of sunny adventures. Community question: which Hero would you take to the beach?",
+    ev3_title:"Strongest Governor — Honor Rankings", ev3_text:"Fight against governors across kingdoms for glory on the Honor Ranking and bountiful rewards. Rise to the top of the rankings and prove you are the mightiest Governor.",
+    ev4_title:"Sanctuary Battle Season", ev4_text:"Alliances compete to occupy Sanctuaries and Fortresses. New Sanctuary Teleport feature: after research, teleport freely to your registered Sanctuary ruins. Points earned = season rewards.",
+    ev5_title:"Find The Star — Community Challenge", ev5_text:"Community puzzle challenge on Facebook. Players submitted answers with their Game ID. 50 lucky Governors were randomly selected to receive special rewards.",
+    ev6_title:"Easter Puzzle Time", ev6_text:"Seasonal Easter event featuring fun puzzle challenges for the community. Limited-time rewards and exclusive items were available to participating Governors.",
+    ev_fb:"Follow on Facebook", ev_site:"Official Page", ev_fb2:"Follow Updates", ev_guide:"Full Guide", ev_recap:"View Recap", ev_recap2:"View Event",
+    nh_tag:"Latest Update", nh_title:"New Heroes — Kingdom 1", nh_desc:"Three Epic Heroes added in the latest update — available through events and recruitment in the first kingdoms.",
+    nh_rarity:"Epic Hero", nh_rarity2:"Epic Hero", nh_rarity3:"Epic Hero",
+    nh1_role:"Combat Hero", nh1_desc:"A fierce and battle-hardened warrior. Fahd specializes in leading ground troops into close-range combat with devastating efficiency.",
+    nh2_role:"Support Hero", nh2_desc:"Yeonwoo brings tactical support to the battlefield. Her unique skills enhance alliance operations and provide critical buffs during large-scale engagements.",
+    nh3_role:"Ranged Hero", nh3_desc:"Mikoto commands ranged units with deadly precision. Excels in long-distance engagements and is highly effective in both PvE and PvP scenarios.",
+    nh_source:"Available via Events & Recruitment", nh_source2:"Available via Events & Recruitment", nh_source3:"Available via Events & Recruitment",
+    nh_note:"* Hero availability may vary by server and kingdom progression stage.",
+    comm_tag:"Official Channels", comm_title:"Join the Community", comm_desc:"Connect with over 2.2 million Governors worldwide through KingShot's official channels.",
+    fb_members:"2.2M+ Followers", fb_desc:"Official page for news, events, community challenges, and announcements. The main hub for all KingShot updates.", fb_btn:"Visit Page →",
+    dc_members:"587K+ Members", dc_desc:"Official Discord server for live chat, strategy discussions, gift codes, and direct developer interaction.", dc_btn:"Join Server →",
+    store_name:"Official Store", store_sub:"Century Games Store", store_desc:"Top up gems and in-game currency directly through the official Century Games store for the best rates and security.", store_btn:"Visit Store →",
+    sup_name:"Help Center", sup_sub:"Century Games Support", sup_desc:"Official help cent
